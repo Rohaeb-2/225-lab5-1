@@ -56,7 +56,7 @@ pipeline {
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
                     -e HOME=${WORKSPACE} \
-                    -e BURP_START_URL=http://10.48.229.155 \
+                    -e BURP_START_URL=http://10.48.229.156 \
                     -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
                     public.ecr.aws/portswigger/dastardly:latest
                 '''
