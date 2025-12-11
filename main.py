@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, response
+from flask import Flask, request, render_template, redirect, url_for, flash, Response
 import sqlite3
 import os
 import math
@@ -100,7 +100,7 @@ def index():
         has_prev=has_prev, has_next=has_next, total=total,
         start_page=start_page, end_page=end_page
     )
-    @app.route('/export')
+@app.route('/export')
 def export():
     db = get_db()
     contacts = db.execute("SELECT * FROM contacts ORDER BY id").fetchall()
