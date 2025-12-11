@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, response
 import sqlite3
 import os
 import math
@@ -99,6 +99,22 @@ def index():
         page=page, pages=pages, per_page=per_page,
         has_prev=has_prev, has_next=has_next, total=total,
         start_page=start_page, end_page=end_page
+    )
+    @app.route('/export')
+def export():
+    db = get_db()
+    contacts = db.execute("SELECT * FROM contacts ORDER BY id").fetchall()
+    db.close()
+
+    # Build CSV string
+    csv_data = "id,name,phone\n"
+    for c in contacts:
+        csv_data += f"{c['id']},{c['name']},{c['phone']}\n"
+
+    return Response(
+        csv_data,
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment;filename=contacts.csv"}
     )
 
 if __name__ == "__main__":
